@@ -61,6 +61,7 @@ Model::find_moves()
     } else if (first_click == 4) {
 
     }
+    return res;
 }
 
 void
