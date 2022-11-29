@@ -30,7 +30,15 @@ private:
 
 
     //helper function
-    bool check_blocked(Position);
+    //check the position and add it into res if it is not red
+    bool check_red(Position);
+
+    // same but black
+    bool check_black(Position);
+
+    void vertical_check(Player,Position);
+
+    void horizontal_check(Player,Position);
 
 
 public:

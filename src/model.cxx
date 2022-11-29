@@ -26,8 +26,6 @@ Model::find_moves()
             check_red({click_pos.x - 1, click_pos.y});
         }
         check_red({click_pos.x, click_pos.y - 1});
-
-        return res;
     }
 
         // black soldier兵
@@ -37,29 +35,94 @@ Model::find_moves()
             check_black({click_pos.x - 1, click_pos.y});
         }
         check_black({click_pos.x, click_pos.y + 1});
-
-        return res;
     }
-        // red cannon
+
+    // red cannon
     else if (first_click == 2) {
-
     }
-        // black cannon
+    // black cannon
     else if (first_click == 12) {
-
     }
-        //red car
+    //red car
     else if (first_click == 3) {
         //check up
         vertical_check(Player::red,click_pos);
         horizontal_check(Player::red,click_pos);
+    }
+    // black car
+    else if (first_click == 13) {
+        vertical_check(Player::black,click_pos);
+        horizontal_check(Player::black,click_pos);
+    }
+
+    // red advisor士
+    else if (first_click == 6) {
+        // check if the general is in 宫 before check if anything is on the way
+        if ((click_pos.x - 1 >= 3) && (click_pos.y - 1 >= 7)) {
+            check_red({click_pos.x - 1, click_pos.y - 1});
+        }
+        if ((click_pos.x - 1 >= 3) && (click_pos.y + 1 <= 9)) {
+            check_red({click_pos.x - 1, click_pos.y + 1});
+        }
+        if ((click_pos.x + 1 <= 5) && (click_pos.y - 1 >= 7)) {
+            check_red({click_pos.x + 1, click_pos.y - 1});
+        }
+        if ((click_pos.x + 1 <= 5) && (click_pos.y + 1 <= 9)) {
+            check_red({click_pos.x + 1, click_pos.y + 1});
+        }
+    }
+
+    // black advisor士
+    else if (first_click == 16) {
+        // check if the general is in 宫 before check if anything is on the way
+        if ((click_pos.x - 1 >= 3) && (click_pos.y - 1 >= 0)) {
+            check_red({click_pos.x - 1, click_pos.y - 1});
+        }
+        if ((click_pos.x - 1 >= 3) && (click_pos.y + 1 <= 2)) {
+            check_red({click_pos.x - 1, click_pos.y + 1});
+        }
+        if ((click_pos.x + 1 <= 5) && (click_pos.y - 1 >= 0)) {
+            check_red({click_pos.x + 1, click_pos.y - 1});
+        }
+        if ((click_pos.x + 1 <= 5) && (click_pos.y + 1 <= 2)) {
+            check_red({click_pos.x + 1, click_pos.y + 1});
+        }
+    }
+
+        // red general帅
+    else if (first_click == 7) {
+        // check if the general is in 宫 before check if anything is on the way
+        if (click_pos.x + 1 <= 5) {
+            check_red({click_pos.x + 1, click_pos.y});
+        }
+        if (click_pos.x - 1 >= 3) {
+            check_red({click_pos.x - 1, click_pos.y});
+        }
+        if (click_pos.y + 1 >= 9) {
+            check_red({click_pos.x, click_pos.y + 1});
+        }
+        if (click_pos.y - 1 >= 7) {
+            check_red({click_pos.x, click_pos.y - 1});
+        }
         return res;
     }
-        // black car
-    else if (first_click == 13) {
 
-    } else if (first_click == 4) {
-
+        // black general帅
+    else if (first_click == 17) {
+        // check if the general is in 宫 before check if anything is on the way
+        if (click_pos.x + 1 <= 5) {
+            check_black({click_pos.x + 1, click_pos.y});
+        }
+        if (click_pos.x - 1 >= 3) {
+            check_black({click_pos.x - 1, click_pos.y});
+        }
+        if (click_pos.y + 1 >= 2) {
+            check_black({click_pos.x, click_pos.y + 1});
+        }
+        if (click_pos.y - 1 >= 0) {
+            check_red({click_pos.x, click_pos.y - 1});
+        }
+        return res;
     }
     return res;
 }
@@ -74,8 +137,10 @@ Model::play_move(Model::Position)
 bool
 Model::check_red(Position pos)
 {
-    return (board[pos] != 0);
-
+    if (board[pos] / 10 != 0) {
+        res[pos] = true;
+    }
+    return (board[pos] / 10 == 0);
 }
 
 bool
