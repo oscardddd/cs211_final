@@ -38,10 +38,21 @@
     </Objective-C>
     <Objective-C-extensions>
       <option name="TYPE_QUALIFIERS_PLACEMENT" value="AFTER" />
-      <extensions>
-        <pair source="cxx" header="hxx" fileNamingConvention="SNAKE_CASE" />
-        <pair source="c" header="h" fileNamingConvention="SNAKE_CASE" />
-      </extensions>
+      <rules>
+        <rule entity="MACRO" visibility="ANY" specifier="ANY" prefix="" style="SCREAMING_SNAKE_CASE" suffix="" />
+        <rule entity="CLASS" visibility="ANY" specifier="ANY" prefix="" style="LEADING_SNAKE_CASE" suffix="" />
+        <rule entity="ENUMERATOR" visibility="ANY" specifier="ANY" prefix="" style="SNAKE_CASE" suffix="" />
+        <rule entity="CLASS_MEMBER_FUNCTION,STRUCT_MEMBER_FUNCTION,CLASS_MEMBER_FIELD,STRUCT_MEMBER_FIELD" visibility="PROTECTED,PRIVATE" specifier="ANY" prefix="" style="SNAKE_CASE" suffix="_" />
+        <rule entity="CLASS_MEMBER_FUNCTION,STRUCT_MEMBER_FUNCTION,CLASS_MEMBER_FIELD,STRUCT_MEMBER_FIELD" visibility="PUBLIC" specifier="ANY" prefix="" style="SNAKE_CASE" suffix="" />
+        <rule entity="CLASS_MEMBER_FUNCTION,STRUCT_MEMBER_FUNCTION,CLASS_MEMBER_FIELD,STRUCT_MEMBER_FIELD" visibility="PROTECTED,PRIVATE" specifier="STATIC" prefix="c_" style="SNAKE_CASE" suffix="_" />
+        <rule entity="CLASS_MEMBER_FUNCTION,STRUCT_MEMBER_FUNCTION,CLASS_MEMBER_FIELD,STRUCT_MEMBER_FIELD" visibility="PUBLIC" specifier="STATIC" prefix="c_" style="SNAKE_CASE" suffix="" />
+        <rule entity="GLOBAL_FUNCTION" visibility="ANY" specifier="ANY" prefix="" style="SNAKE_CASE" suffix="" />
+        <rule entity="GLOBAL_VARIABLE" visibility="ANY" specifier="ANY" prefix="" style="SNAKE_CASE" suffix="" />
+        <rule entity="PARAMETER,LOCAL_VARIABLE" visibility="ANY" specifier="ANY" prefix="" style="SNAKE_CASE" suffix="" />
+      </rules>
+    </Objective-C-extensions>
+    <Objective-C-extensions>
+      <option name="TYPE_QUALIFIERS_PLACEMENT" value="AFTER" />
       <rules>
         <rule entity="MACRO" visibility="ANY" specifier="ANY" prefix="" style="SCREAMING_SNAKE_CASE" suffix="" />
         <rule entity="CLASS" visibility="ANY" specifier="ANY" prefix="" style="LEADING_SNAKE_CASE" suffix="" />
@@ -60,6 +71,12 @@
       <option name="INDENT_WHERE_CLAUSE" value="false" />
       <option name="ALLOW_ONE_LINE_MATCH" value="true" />
     </RsCodeStyleSettings>
+    <files>
+      <extensions>
+        <pair source="cxx" header="hxx" fileNamingConvention="SNAKE_CASE" />
+        <pair source="c" header="h" fileNamingConvention="SNAKE_CASE" />
+      </extensions>
+    </files>
     <codeStyleSettings language="CMake">
       <option name="SOFT_MARGINS" value="120" />
     </codeStyleSettings>

@@ -15,10 +15,18 @@ class Model
 private:
     Player turn_ = Player::red;
     Player winner_ = Player::neither;
+    // the piece user selects
     int first_click;
+    //the position the user selects
     Position click_pos;
+
+
     Position second_click;
     Board board;
+
+    //the empty position set used to store the possibles moves after
+    // the click
+    Position_set res;
 
 
     //helper function
