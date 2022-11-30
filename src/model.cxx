@@ -20,6 +20,12 @@ Model::set_first_click(Model::Position pos)
     }
 }
 
+int
+Model::operator[](Position pos) const
+{
+    return board[pos];
+}
+
 // return the possible moves gained by moving at click_pos
 Position_set
 Model::find_moves()
@@ -27,20 +33,20 @@ Model::find_moves()
     res.clear();
     // red soldier兵
     if (first_click == 1) {
-        if (click_pos.y <= 4) {
-            check_red({click_pos.x + 1, click_pos.y});
-            check_red({click_pos.x - 1, click_pos.y});
+        if (click_pos.x <= 4) {
+            check_red({click_pos.x, click_pos.y + 1});
+            check_red({click_pos.x, click_pos.y - 1});
         }
-        check_red({click_pos.x, click_pos.y - 1});
+        check_red({click_pos.x - 1, click_pos.y});
     }
 
-        // black soldier兵
+    // black soldier兵
     else if (first_click == 11) {
-        if (click_pos.y >= 5) {
-            check_black({click_pos.x + 1, click_pos.y});
-            check_black({click_pos.x - 1, click_pos.y});
+        if (click_pos.x >= 5) {
+            check_black({click_pos.x, click_pos.y + 1});
+            check_black({click_pos.x, click_pos.y - 1});
         }
-        check_black({click_pos.x, click_pos.y + 1});
+        check_black({click_pos.x + 1, click_pos.y});
     }
 
     // red cannon
@@ -65,19 +71,111 @@ Model::find_moves()
         horizontal_check(Player::black,click_pos);
     }
 
+    // red horse马
+    else if (first_click == 4) {
+        // check if there is any limitation of the eight potential moves
+        if (board[{click_pos.x, click_pos.y + 1}] == 0) {
+            check_red({click_pos.x - 1, click_pos.y + 2});
+            check_red({click_pos.x + 1, click_pos.y + 2});
+        }
+        if (board[{click_pos.x, click_pos.y - 1}] == 0) {
+            check_red({click_pos.x + 1, click_pos.y - 2});
+            check_red({click_pos.x - 1, click_pos.y - 2});
+        }
+        if (board[{click_pos.x - 1, click_pos.y}] == 0) {
+            check_red({click_pos.x - 2, click_pos.y + 1});
+            check_red({click_pos.x - 2, click_pos.y - 1});
+        }
+        if (board[{click_pos.x + 1, click_pos.y}] == 0) {
+            check_red({click_pos.x + 2, click_pos.y + 1});
+            check_red({click_pos.x + 2, click_pos.y - 1});
+        }
+    }
+
+    // black horse马
+    else if (first_click == 14) {
+        // check if there is any limitation of the eight potential moves
+        if (good_position({click_pos.x, click_pos.y + 1}) &&
+        board[{click_pos.x, click_pos.y + 1}] == 0) {
+            check_black({click_pos.x - 1, click_pos.y + 2});
+            check_black({click_pos.x + 1, click_pos.y + 2});
+        }
+        if (good_position({click_pos.x, click_pos.y - 1}) &&
+        board[{click_pos.x, click_pos.y - 1}] == 0) {
+            check_black({click_pos.x + 1, click_pos.y - 2});
+            check_black({click_pos.x - 1, click_pos.y - 2});
+        }
+        if (good_position({click_pos.x - 1, click_pos.y}) &&
+        board[{click_pos.x - 1, click_pos.y}] == 0) {
+            check_black({click_pos.x - 2, click_pos.y + 1});
+            check_black({click_pos.x - 2, click_pos.y - 1});
+        }
+        if (good_position({click_pos.x + 1, click_pos.y}) &&
+        board[{click_pos.x + 1, click_pos.y}] == 0) {
+            check_black({click_pos.x + 2, click_pos.y + 1});
+            check_black({click_pos.x + 2, click_pos.y - 1});
+        }
+    }
+
+    // black elephant象
+    else if (first_click == 14) {
+        // see if the elephant crosses the river
+        if (click_pos.x + 2 <= 4) {
+            if (good_position({click_pos.x - 1, click_pos.y - 1}) &&
+                board[{click_pos.x - 1, click_pos.y - 1}] == 0) {
+                check_black({click_pos.x - 2, click_pos.y - 2});
+            }
+            if (good_position({click_pos.x - 1, click_pos.y + 1}) &&
+                board[{click_pos.x - 1, click_pos.y + 1}] == 0) {
+                check_black({click_pos.x - 2, click_pos.y + 2});
+            }
+            if (good_position({click_pos.x + 1, click_pos.y - 1}) &&
+                board[{click_pos.x + 1, click_pos.y - 1}] == 0) {
+                check_black({click_pos.x + 2, click_pos.y - 2});
+            }
+            if (good_position({click_pos.x + 1, click_pos.y + 1}) &&
+                board[{click_pos.x + 1, click_pos.y + 1}] == 0) {
+                check_black({click_pos.x + 2, click_pos.y + 2});
+            }
+        }
+    }
+
+    //red elephant象
+    else if (first_click == 14) {
+        // see if the elephant crosses the river
+        if (click_pos.x - 2 >= 5) {
+            if (good_position({click_pos.x - 1, click_pos.y - 1}) &&
+                board[{click_pos.x - 1, click_pos.y - 1}] == 0) {
+                check_black({click_pos.x - 2, click_pos.y - 2});
+            }
+            if (good_position({click_pos.x - 1, click_pos.y + 1}) &&
+                board[{click_pos.x - 1, click_pos.y + 1}] == 0) {
+                check_black({click_pos.x - 2, click_pos.y + 2});
+            }
+            if (good_position({click_pos.x + 1, click_pos.y - 1}) &&
+                board[{click_pos.x + 1, click_pos.y - 1}] == 0) {
+                check_black({click_pos.x + 2, click_pos.y - 2});
+            }
+            if (good_position({click_pos.x + 1, click_pos.y + 1}) &&
+                board[{click_pos.x + 1, click_pos.y + 1}] == 0) {
+                check_black({click_pos.x + 2, click_pos.y + 2});
+            }
+        }
+    }
+
     // red advisor士
     else if (first_click == 6) {
         // check if the general is in 宫 before check if anything is on the way
-        if ((click_pos.x - 1 >= 3) && (click_pos.y - 1 >= 7)) {
+        if ((click_pos.y - 1 >= 3) && (click_pos.x - 1 >= 7)) {
             check_red({click_pos.x - 1, click_pos.y - 1});
         }
-        if ((click_pos.x - 1 >= 3) && (click_pos.y + 1 <= 9)) {
-            check_red({click_pos.x - 1, click_pos.y + 1});
-        }
-        if ((click_pos.x + 1 <= 5) && (click_pos.y - 1 >= 7)) {
+        if ((click_pos.y - 1 >= 3) && (click_pos.x + 1 <= 9)) {
             check_red({click_pos.x + 1, click_pos.y - 1});
         }
-        if ((click_pos.x + 1 <= 5) && (click_pos.y + 1 <= 9)) {
+        if ((click_pos.y + 1 <= 5) && (click_pos.x - 1 >= 7)) {
+            check_red({click_pos.x - 1, click_pos.y + 1});
+        }
+        if ((click_pos.y + 1 <= 5) && (click_pos.x + 1 <= 9)) {
             check_red({click_pos.x + 1, click_pos.y + 1});
         }
     }
@@ -85,16 +183,16 @@ Model::find_moves()
     // black advisor士
     else if (first_click == 16) {
         // check if the general is in 宫 before check if anything is on the way
-        if ((click_pos.x - 1 >= 3) && (click_pos.y - 1 >= 0)) {
+        if ((click_pos.y - 1 >= 3) && (click_pos.x - 1 >= 0)) {
             check_red({click_pos.x - 1, click_pos.y - 1});
         }
-        if ((click_pos.x - 1 >= 3) && (click_pos.y + 1 <= 2)) {
-            check_red({click_pos.x - 1, click_pos.y + 1});
-        }
-        if ((click_pos.x + 1 <= 5) && (click_pos.y - 1 >= 0)) {
+        if ((click_pos.y - 1 >= 3) && (click_pos.x + 1 <= 2)) {
             check_red({click_pos.x + 1, click_pos.y - 1});
         }
-        if ((click_pos.x + 1 <= 5) && (click_pos.y + 1 <= 2)) {
+        if ((click_pos.y + 1 <= 5) && (click_pos.x - 1 >= 0)) {
+            check_red({click_pos.x - 1, click_pos.y + 1});
+        }
+        if ((click_pos.y + 1 <= 5) && (click_pos.x + 1 <= 2)) {
             check_red({click_pos.x + 1, click_pos.y + 1});
         }
     }
@@ -108,11 +206,11 @@ Model::find_moves()
         if (click_pos.y - 1 >= 3) {
             check_red({click_pos.x, click_pos.y - 1});
         }
-        if (click_pos.y + 1 >= 9) {
-            check_red({click_pos.x, click_pos.y + 1});
+        if (click_pos.x + 1 >= 9) {
+            check_red({click_pos.x + 1, click_pos.y});
         }
-        if (click_pos.y - 1 >= 7) {
-            check_red({click_pos.x, click_pos.y - 1});
+        if (click_pos.x - 1 >= 7) {
+            check_red({click_pos.x - 1, click_pos.y});
         }
         return res;
     }
@@ -120,28 +218,22 @@ Model::find_moves()
         // black general帅
     else if (first_click == 17) {
         // check if the general is in 宫 before check if anything is on the way
-        if (click_pos.x + 1 <= 5) {
-            check_black({click_pos.x + 1, click_pos.y});
-        }
-        if (click_pos.x - 1 >= 3) {
-            check_black({click_pos.x - 1, click_pos.y});
-        }
-        if (click_pos.y + 1 >= 2) {
+        if (click_pos.y + 1 <= 5) {
             check_black({click_pos.x, click_pos.y + 1});
         }
-        if (click_pos.y - 1 >= 0) {
-            check_red({click_pos.x, click_pos.y - 1});
+        if (click_pos.y - 1 >= 3) {
+            check_black({click_pos.x - 1, click_pos.y - 1});
         }
-        return res;
+        if (click_pos.x + 1 >= 2) {
+            check_black({click_pos.x + 1, click_pos.y});
+        }
+        if (click_pos.x - 1 >= 0) {
+            check_red({click_pos.x - 1, click_pos.y});
+        }
     }
     return res;
 }
 
-void
-Model::play_move(Model::Position)
-{
-
-}
 
 //
 // HELPER FUNCTION
@@ -180,7 +272,6 @@ Model::check_black(Position pos)
     return false;
 
 }
-
 
 //check vertically to find out the possible moves (for car and cannon)
 void

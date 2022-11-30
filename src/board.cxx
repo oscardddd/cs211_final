@@ -6,8 +6,7 @@ using namespace ge211;
 
 Board::Board():
     matrix()
-{
-}
+{}
 
 bool
 Board::good_position(Position pos) const

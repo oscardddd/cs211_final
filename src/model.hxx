@@ -10,6 +10,7 @@
 
 class Model
 {
+public:
     using Position = ge211::Posn<int>;
 
 private:
@@ -31,7 +32,6 @@ private:
     //the empty position set used to store the possibles moves after
     // the click
     Position_set res;
-
 
     //helper function
     //check the position and add it into res if it is not red
@@ -56,6 +56,9 @@ private:
 
 public:
     Model();
+
+    int operator[](Position) const;
+
     void set_first_click(Position);
 
     void set_second_click(Position);
@@ -65,6 +68,7 @@ public:
     bool check_click();
 
     void play_move(Position);
+
 
 
 

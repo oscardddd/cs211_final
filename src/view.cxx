@@ -4,15 +4,49 @@ static int const grid_size = 40;
 static ge211:: Color const available_color {50, 100, 50};
 
 View::View(Model const& model)
-        : model_(model)
-{ }
+        : model_(model),
+          car_red_sprite_("Car_red_pic.png"),
+          horse_red_sprite_("Horse_red_pic.png"),
+          elephant_red_sprite_("Elephant_red_pic.png"),
+          advisor_red_sprite_("Advisor_red_pic.png"),
+          general_red_sprite_("General_red_pic.png"),
+          cannon_red_sprite_("Cannon_red_pic.png"),
+          soldier_red_sprite_("Soldier_red_pic.png"),
+          car_black_sprite_("Car_black_pic.png"),
+          horse_black_sprite_("Horse_black_pic.png"),
+          elephant_black_sprite_("Elephant_black_pic.png"),
+          advisor_black_sprite_("Advisor_black_pic.png"),
+          general_black_sprite_("General_black_pic.png"),
+          cannon_black_sprite_("Cannon_black_pic.png"),
+          soldier_black_sprite_("Soldier_black_pic.png"),
+          available_moves_sprite_(grid_size, available_color),
+          background_sprite_("Board_background.png")
+{}
 
 void
 View::draw(ge211::Sprite_set& set)
 {
-    // This needs to do something!
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 9; j++) {
+            ge211::Posn<int> grid_pos = {grid_size * j,
+                                         grid_size * i};
+            set.add_sprite(background_sprite_, grid_pos, 1,
+                           ge211::Transform().set_scale(0.28));
+            // add_piece_sprite_(set, {i,j});
+        }
+    }
+}
 
+View::Position
+View::board_to_screen(Model::Position pos) const
+{
+    return {9 * pos.x, 8 * pos.y};
+}
 
+Model::Position
+View::screen_to_board(View::Position pos) const
+{
+    return {pos.x / 9, pos.y / 8};
 }
 
 View::Dimensions
