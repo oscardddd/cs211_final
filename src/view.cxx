@@ -20,12 +20,18 @@ View::View(Model const& model)
           cannon_black_sprite_("Cannon_black_pic.png"),
           soldier_black_sprite_("Soldier_black_pic.png"),
           available_moves_sprite_(grid_size, available_color),
-          background_sprite_("Board_background_pic.png"),
+          background_sprite_("Board_background_pic.jpg"),
           board_top_sprite_("Board_top_pic.jpg"),
           board_left_sprite_("Board_left_pic.jpg"),
           board_right_sprite_("Board_right_pic.jpg"),
+          board_bottom_sprite_("Board_bottom_pic.jpg"),
           board_corner1_sprite_("Corner1.jpg"),
-          board_corner2_sprite_("Corner2.jpg")
+          board_corner2_sprite_("Corner2.jpg"),
+          board_corner3_sprite_("Corner3.jpg"),
+          board_corner4_sprite_("Corner4.jpg"),
+          lower_river_sprite_("Lower_river_pic.jpg"),
+          upper_river_sprite_("Upper_river_pic.jpg"),
+          indicator(grid_size/2-10,blue)
 {}
 
 void
@@ -41,8 +47,14 @@ View::draw(ge211::Sprite_set& set)
             } else if (i == 0 && j == 8){
                 set.add_sprite(board_corner2_sprite_, grid_pos, 1,
                                ge211::Transform().set_scale(0.45));
-            } else if (j == 0) {
-                set.add_sprite(board_left_sprite_, grid_pos, 1,
+            } else if (i == 9 && j == 0){
+                set.add_sprite(board_corner3_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.45));
+            } else if (i == 9 && j == 8){
+                set.add_sprite(board_corner4_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.45));
+            } else if (i == 9 && j == 8){
+                set.add_sprite(board_corner4_sprite_, grid_pos, 1,
                                ge211::Transform().set_scale(0.45));
             } else if (j == 8) {
                 set.add_sprite(board_right_sprite_, grid_pos, 1,
@@ -50,9 +62,21 @@ View::draw(ge211::Sprite_set& set)
             } else if (i == 0) {
                 set.add_sprite(board_top_sprite_, grid_pos, 1,
                                ge211::Transform().set_scale(0.45));
+            } else if (i == 9) {
+                set.add_sprite(board_bottom_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.45));
+            } else if (j == 0) {
+                set.add_sprite(board_left_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.45));
+            } else if (i == 5) {
+                set.add_sprite(lower_river_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.45));
+            } else if (i == 4) {
+                set.add_sprite(upper_river_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.45));
             } else {
                 set.add_sprite(background_sprite_, grid_pos, 1,
-                               ge211::Transform().set_scale(0.2));
+                               ge211::Transform().set_scale(0.45));
             }
             add_piece_sprite_(set, {j,i});
             if(model_.find_moves() == )

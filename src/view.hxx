@@ -46,6 +46,12 @@ private:
     ge211::Image_sprite board_right_sprite_;
     ge211::Image_sprite board_corner1_sprite_;
     ge211::Image_sprite board_corner2_sprite_;
+    ge211::Image_sprite board_corner3_sprite_;
+    ge211::Image_sprite board_corner4_sprite_;
+    ge211::Image_sprite board_bottom_sprite_;
+    ge211::Image_sprite lower_river_sprite_;
+    ge211::Image_sprite upper_river_sprite_;
+    ge211::sprites::Circle_sprite indicator;
 
     void
     add_piece_sprite_(ge211::Sprite_set&, Position)
