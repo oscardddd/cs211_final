@@ -4,8 +4,8 @@
 
 using namespace ge211;
 
-Board::Board():
-    matrix()
+Board::Board()
+
 {}
 
 bool
