@@ -68,6 +68,7 @@ public:
     /// Returns the `Player` stored at `pos`.
     int operator[](Position pos) const;
 
+    void set(Position pos,int piece);
     /// Returns a reference to a `std::vector` containing all eight "unit
     /// direction vectors". In Python notation, these are:
     ///

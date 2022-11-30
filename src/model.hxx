@@ -18,10 +18,14 @@ private:
     // the piece user selects
     int first_click;
     //the position the user selects
-    Position click_pos;
+    Position click_pos = {0, 0};
+    // 0 indicates we are currently clicks
 
 
-    Position second_click;
+
+    int second_click;
+    Position second_pos = {0, 0};
+
     Board board;
 
     //the empty position set used to store the possibles moves after
@@ -36,22 +40,36 @@ private:
     // same but black
     bool check_black(Position);
 
+    bool good_position(Position);
     void vertical_check(Player,Position);
 
     void horizontal_check(Player,Position);
+    void cannon_check_horizontally(Player);
+    void cannon_check_vertically(Player);
+
+    //if the game ends, set winner and return true.
+    bool set_winner();
+    void advance_turn();
+    void really_play_move();
+
 
 
 public:
     Model();
     void set_first_click(Position);
+
+    void set_second_click(Position);
+
     Position_set find_moves();
+
+    bool check_click();
 
     void play_move(Position);
 
 
 
 
-    Position_set horizontal_and_vertical();
+
 };
 
 

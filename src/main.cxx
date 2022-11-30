@@ -1,9 +1,11 @@
 // #include "controller.hxx"
 #include "iostream"
+#include "controller.hxx"
 int
 main()
 {
-    int a [3][4];
-    std::cout<<a;
 
+    Controller().run();
+
+    return 1;
 }

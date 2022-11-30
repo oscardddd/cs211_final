@@ -12,8 +12,17 @@ public:
 
 protected:
     void draw(ge211::Sprite_set& set) override;
+    void on_mouse_down(ge211::events::Mouse_button,ge211::geometry::Posn<int>);
+
+    View::Dimensions initial_window_dimensions() const override;
+    std::string initial_window_title() const override;
+
 
 private:
     Model model_;
     View view_;
+    ge211::Posn<int> first_click;
+    ge211::Posn<int> second_click;
+
+
 };
