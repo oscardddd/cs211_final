@@ -24,7 +24,7 @@ public:
     std::string initial_window_title() const;
 
 private:
-    Model const& model_;
+    Model model_;
     ge211::Image_sprite car_red_sprite_;
     ge211::Image_sprite horse_red_sprite_;
     ge211::Image_sprite elephant_red_sprite_;

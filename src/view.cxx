@@ -55,6 +55,7 @@ View::draw(ge211::Sprite_set& set)
                                ge211::Transform().set_scale(0.2));
             }
             add_piece_sprite_(set, {j,i});
+            if(model_.find_moves() == )
         }
     }
 }
