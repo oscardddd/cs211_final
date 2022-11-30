@@ -1,8 +1,8 @@
 #include "model.hxx"
 
 Model::Model():
-    first_click(0),
-    second_click(0),
+    first_click(-1),
+    second_click(-1),
     board()
 {}
 
@@ -493,18 +493,42 @@ void Model::set_second_click(Model::Position pos)
 void
 Model::play_move(Model::Position pos)
 {
-    first_click = second_click;
-    second_click = board[pos];
-
-
     if (turn_ == Player::neither) {
         throw ge211::Client_logic_error("Model::play_move: game over");
     }
-    if (turn_ == Player::red && first_click/10 != 0 ||
-        turn_ == Player::black && first_click/10 != 1) {
-        // check if there was no such move
-        throw ge211::Client_logic_error("Model::play_move: no such move");
+    // if (turn_ == Player::red && first_click/10 != 0 ||
+    //     turn_ == Player::black && first_click/10 != 1) {
+    //     // check if there was no such move
+    //     throw ge211::Client_logic_error("Model::play_move: no such move");
+    // }
+    if(turn_ == Player::red && first_click/10 == 0 ||
+    turn_ == Player::black && first_click/10 == 1){
+        // if(first_click == -1){
+        //     click_pos = {pos.y,pos.x};
+        //     first_click = board[click_pos];
+        // }
+        if(!find_moves()[{pos.y,pos.x}]){
+            click_pos = {pos.y,pos.x};
+            first_click = board[click_pos];
+        }
+        else if(find_moves()[{pos.y,pos.x}]){
+            second_pos = {pos.y,pos.x};
+            second_click = board[second_pos];
+            set_winner();
+            board.set(second_pos,first_click);
+            first_click = -1;
+            advance_turn();
+        }
+
     }
+
+
+
+
+
+
+
+
 
 }
 
@@ -513,10 +537,12 @@ bool Model::set_winner()
 {
     if(second_click == 7){
         winner_ = Player::black;
+        turn_ = Player::neither;
         return true;
     }
     else if (second_click == 17){
         winner_ = Player::red;
+        turn_ = Player::neither;
         return true;
     }
     return false;
@@ -528,14 +554,5 @@ void Model::advance_turn()
 
 }
 
-void Model::really_play_move()
-{
-    board.set(second_pos,second_click);
-    if(set_winner()){
-        turn_ = Player::neither;
-    }
 
-
-
-}
 

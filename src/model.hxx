@@ -50,7 +50,7 @@ private:
     //if the game ends, set winner and return true.
     bool set_winner();
     void advance_turn();
-    void really_play_move();
+
 
 
 

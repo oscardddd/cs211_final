@@ -3,6 +3,8 @@
 static int const grid_size = 40;
 static ge211:: Color const available_color {50, 100, 50};
 
+static ge211::Color const blue{0,0,255};
+
 View::View(Model const& model)
         : model_(model),
           car_red_sprite_("Car_red_pic.png"),
@@ -79,7 +81,13 @@ View::draw(ge211::Sprite_set& set)
                                ge211::Transform().set_scale(0.45));
             }
             add_piece_sprite_(set, {j,i});
-            if(model_.find_moves() == )
+            //if(!model_.find_moves().empty()){
+            //    for(Position pos: model_.find_moves()){
+            //        set.add_sprite(indicator,{grid_size*pos.y,grid_size*pos
+            //.x});
+            //    }
+            //}
+
         }
     }
 }
