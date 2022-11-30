@@ -31,8 +31,8 @@ View::View(Model const& model)
 void
 View::draw(ge211::Sprite_set& set)
 {
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 9; j++) {
+    for (int j = 0; j < 9; j++) {
+        for (int i = 0; i < 10; i++) {
             ge211::Posn<int> grid_pos = {grid_size * j,
                                          grid_size * i};
             if (i == 0 && j == 0) {
@@ -54,7 +54,7 @@ View::draw(ge211::Sprite_set& set)
                 set.add_sprite(background_sprite_, grid_pos, 1,
                                ge211::Transform().set_scale(0.2));
             }
-            //add_piece_sprite_(set, {j,i});
+            add_piece_sprite_(set, {j,i});
         }
     }
 }
@@ -85,9 +85,10 @@ std::string View::initial_window_title() const
 }
 
 void
-View::add_piece_sprite_(ge211::Sprite_set& set, Position posn) const
+View::add_piece_sprite_(ge211::Sprite_set& set, Position posn2) const
 {
-    Position pos = {grid_size * posn.x + 1,grid_size * posn.y + 1};
+    Position pos = {grid_size * posn2.x ,grid_size * posn2.y };
+    Position posn = {posn2.y,posn2.x};
     if (model_[posn] == 1) {
         set.add_sprite(soldier_red_sprite_, pos, 3,
                        ge211::Transform().set_scale(0.25));

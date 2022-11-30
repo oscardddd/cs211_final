@@ -5,13 +5,14 @@
 using namespace ge211;
 
 Board::Board()
+
 {}
 
 bool
 Board::good_position(Position pos) const
 {
-    return 0 <= pos.x && pos.x < 9 &&
-           0 <= pos.y && pos.y < 10;
+    return 0 <= pos.x && pos.x < 10 &&
+           0 <= pos.y && pos.y < 9;
 }
 
 //return the number representative at position pos
@@ -19,7 +20,7 @@ int
 Board::operator[](Position pos) const
 {
     bounds_check_(pos);
-    return matrix[pos.y][pos.x];
+    return matrix[pos.x][pos.y];
 }
 
 
