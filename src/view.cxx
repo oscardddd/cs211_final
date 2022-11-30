@@ -20,7 +20,12 @@ View::View(Model const& model)
           cannon_black_sprite_("Cannon_black_pic.png"),
           soldier_black_sprite_("Soldier_black_pic.png"),
           available_moves_sprite_(grid_size, available_color),
-          background_sprite_("Board_background.png")
+          background_sprite_("Board_background_pic.png"),
+          board_top_sprite_("Board_top_pic.jpg"),
+          board_left_sprite_("Board_left_pic.jpg"),
+          board_right_sprite_("Board_right_pic.jpg"),
+          board_corner1_sprite_("Corner1.jpg"),
+          board_corner2_sprite_("Corner2.jpg")
 {}
 
 void
@@ -30,9 +35,26 @@ View::draw(ge211::Sprite_set& set)
         for (int j = 0; j < 9; j++) {
             ge211::Posn<int> grid_pos = {grid_size * j,
                                          grid_size * i};
-            set.add_sprite(background_sprite_, grid_pos, 1,
-                           ge211::Transform().set_scale(0.28));
-            add_piece_sprite_(set, {j,i});
+            if (i == 0 && j == 0) {
+                set.add_sprite(board_corner1_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.45));
+            } else if (i == 0 && j == 8){
+                set.add_sprite(board_corner2_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.45));
+            } else if (j == 0) {
+                set.add_sprite(board_left_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.45));
+            } else if (j == 8) {
+                set.add_sprite(board_right_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.45));
+            } else if (i == 0) {
+                set.add_sprite(board_top_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.45));
+            } else {
+                set.add_sprite(background_sprite_, grid_pos, 1,
+                               ge211::Transform().set_scale(0.2));
+            }
+            //add_piece_sprite_(set, {j,i});
         }
     }
 }
@@ -65,40 +87,48 @@ std::string View::initial_window_title() const
 void
 View::add_piece_sprite_(ge211::Sprite_set& set, Position posn) const
 {
-    Position pos = {grid_size * posn.x,grid_size * posn.y};
-    if (model_[{posn}] == 1) {
-        set.add_sprite(soldier_red_sprite_, pos, 3,ge211::Transform()
-        .set_scale(0.25));
-
+    Position pos = {grid_size * posn.x + 1,grid_size * posn.y + 1};
+    if (model_[posn] == 1) {
+        set.add_sprite(soldier_red_sprite_, pos, 3,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 2) {
-        set.add_sprite(cannon_red_sprite_, pos, 3, ge211::Transform()
-                .set_scale(0.25));
+        set.add_sprite(cannon_red_sprite_, pos, 3,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 3) {
-        set.add_sprite(car_red_sprite_, pos, 3, ge211::Transform().set_scale(0.25));
+        set.add_sprite(car_red_sprite_, pos, 3,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 4) {
-        set.add_sprite(horse_red_sprite_, pos, 3, ge211::Transform().set_scale(0.25));
+        set.add_sprite(horse_red_sprite_, pos, 3,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 5) {
-        set.add_sprite(elephant_red_sprite_, pos, 3, ge211::Transform().set_scale(0.25));
+        set.add_sprite(elephant_red_sprite_, pos, 3,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 6) {
-        set.add_sprite(advisor_red_sprite_, pos, 3, ge211::Transform().set_scale(0.25));
+        set.add_sprite(advisor_red_sprite_, pos, 3,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 7) {
-        set.add_sprite(general_red_sprite_, pos, 3, ge211::Transform().set_scale(0.25));
+        set.add_sprite(general_red_sprite_, pos, 3,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 11) {
-        set.add_sprite(soldier_black_sprite_, pos, 3, ge211::Transform().set_scale(0.25));
+        set.add_sprite(soldier_black_sprite_, pos, 3,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 12) {
-        set.add_sprite(cannon_black_sprite_, pos, 3, ge211::Transform().set_scale(0.25));
+        set.add_sprite(cannon_black_sprite_, pos, 3,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 13) {
-        set.add_sprite(car_black_sprite_, pos, 3, ge211::Transform().set_scale(0.25));
+        set.add_sprite(car_black_sprite_, pos, 3,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 14) {
-        set.add_sprite(horse_black_sprite_, pos, 2, ge211::Transform().set_scale(0.25));
+        set.add_sprite(horse_black_sprite_, pos, 2,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 15) {
-        set.add_sprite(elephant_black_sprite_, pos, 2, ge211::Transform().set_scale(0.25));
+        set.add_sprite(elephant_black_sprite_, pos, 2,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 16) {
-        set.add_sprite(advisor_black_sprite_, pos, 2, ge211::Transform().set_scale(0.25));
+        set.add_sprite(advisor_black_sprite_, pos, 2,
+                       ge211::Transform().set_scale(0.25));
     } else if (model_[posn] == 17) {
-        set.add_sprite(general_black_sprite_, pos, 2, ge211::Transform().set_scale(0.25));
+        set.add_sprite(general_black_sprite_, pos, 2,
+                       ge211::Transform().set_scale(0.25));
     }
-    // else {
-    //     set.add_sprite(general_black_sprite_, pos, 2, ge211::Transform().set_scale(0.28));
-    // }
 }

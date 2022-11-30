@@ -5,7 +5,6 @@
 using namespace ge211;
 
 Board::Board()
-
 {}
 
 bool
@@ -20,7 +19,7 @@ int
 Board::operator[](Position pos) const
 {
     bounds_check_(pos);
-    return matrix[pos.x][pos.y];
+    return matrix[pos.y][pos.x];
 }
 
 

@@ -41,6 +41,11 @@ private:
     ge211::Image_sprite soldier_black_sprite_;
     ge211::Circle_sprite available_moves_sprite_;
     ge211::Image_sprite background_sprite_;
+    ge211::Image_sprite board_top_sprite_;
+    ge211::Image_sprite board_left_sprite_;
+    ge211::Image_sprite board_right_sprite_;
+    ge211::Image_sprite board_corner1_sprite_;
+    ge211::Image_sprite board_corner2_sprite_;
 
     void
     add_piece_sprite_(ge211::Sprite_set&, Position)
