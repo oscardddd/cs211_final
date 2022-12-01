@@ -22,7 +22,7 @@ public:
 
     Dimensions initial_window_dimensions() const;
     std::string initial_window_title() const;
-
+    void update_mouse(Position pos);
 private:
     Model model_;
     ge211::Image_sprite car_red_sprite_;
@@ -52,6 +52,11 @@ private:
     ge211::Image_sprite lower_river_sprite_;
     ge211::Image_sprite upper_river_sprite_;
     ge211::sprites::Circle_sprite indicator;
+    ge211::sprites::Circle_sprite indicator_red;
+    ge211::sprites::Circle_sprite indicator_black;
+
+    ge211::geometry::Posn<int> mouse_p = {0,0};
+
 
     void
     add_piece_sprite_(ge211::Sprite_set&, Position)

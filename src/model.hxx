@@ -14,7 +14,6 @@ public:
     using Position = ge211::Posn<int>;
 
 private:
-    Player turn_ = Player::red;
     Player winner_ = Player::neither;
     // the piece user selects
     int first_click;
@@ -56,6 +55,7 @@ private:
 
 public:
     Model();
+    Player turn_ = Player::red;
 
     int operator[](Position) const;
 

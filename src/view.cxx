@@ -4,6 +4,9 @@ static int const grid_size = 40;
 static ge211:: Color const available_color {50, 100, 50};
 
 static ge211::Color const blue{0,0,255};
+static ge211::Color const red{255,0,0};
+static ge211::Color const black{0,0,0};
+
 
 View::View(Model const& model)
         : model_(model),
@@ -33,8 +36,12 @@ View::View(Model const& model)
           board_corner4_sprite_("Corner4.jpg"),
           lower_river_sprite_("Lower_river_pic.jpg"),
           upper_river_sprite_("Upper_river_pic.jpg"),
-          indicator(grid_size/2-10,blue)
-{}
+          indicator(grid_size/2-10,blue),
+          indicator_red(grid_size/2-10,red),
+          indicator_black(grid_size/2-10,black)
+{
+    mouse_p = {0,0};
+}
 
 void
 View::draw(ge211::Sprite_set& set)
@@ -43,6 +50,7 @@ View::draw(ge211::Sprite_set& set)
         for (int i = 0; i < 10; i++) {
             ge211::Posn<int> grid_pos = {grid_size * j,
                                          grid_size * i};
+            Position mouse_pos = screen_to_board(mouse_p);
             if (i == 0 && j == 0) {
                 set.add_sprite(board_corner1_sprite_, grid_pos, 1,
                                ge211::Transform().set_scale(0.45));
@@ -81,6 +89,11 @@ View::draw(ge211::Sprite_set& set)
                                ge211::Transform().set_scale(0.45));
             }
             add_piece_sprite_(set, {j,i});
+
+            if(model_.turn_ == Player::red && j == mouse_pos.x &&i == mouse_pos
+            .y){
+                set.add_sprite(indicator_red,{mouse_p.x-6,mouse_p.y-6},6);
+            }
             //if(!model_.find_moves().empty()){
             //    for(Position pos: model_.find_moves()){
             //        set.add_sprite(indicator,{grid_size*pos.y,grid_size*pos
@@ -101,7 +114,7 @@ View::board_to_screen(Model::Position pos) const
 Model::Position
 View::screen_to_board(View::Position pos) const
 {
-    return {pos.x / 9, pos.y / 8};
+    return {pos.x / grid_size, pos.y / grid_size};
 }
 
 View::Dimensions
@@ -115,6 +128,10 @@ View::initial_window_dimensions() const
 std::string View::initial_window_title() const
 {
     return "Chinese Chess";
+}
+void View::update_mouse(View::Position pos)
+{
+    mouse_p = pos;
 }
 
 void
