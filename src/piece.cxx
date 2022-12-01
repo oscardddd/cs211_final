@@ -7,13 +7,22 @@
 Player
 other_player(Player player)
 {
-    switch (player) {
-    case Player::black:
-        return Player::red;
-    case Player::red:
+    // switch (player) {
+    // case Player::black:
+    //     return Player::red;
+    // case Player::red:
+    //     return Player::black;
+    // default:
+    //     return player;
+    // }
+    if(player == Player::red){
         return Player::black;
-    default:
-        return player;
+    }
+    else if(player == Player::black){
+        return Player::red;
+    }
+    else{
+        return Player::neither;
     }
 }
 

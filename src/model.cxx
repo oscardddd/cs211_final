@@ -504,7 +504,7 @@ Model::play_move(Model::Position pos)
             std::cout<<"selects "<<first_click<<std::endl;
         }
         else if(find_moves()[{pos.y,pos.x}]){
-            std::cout<<"second click"<<std::endl;
+            std::cout<<"second click: "<<std::endl;
             second_pos = {pos.y,pos.x};
             second_click = board[second_pos];
             set_winner();
@@ -512,18 +512,8 @@ Model::play_move(Model::Position pos)
             board.erase(click_pos);
             first_click = -1;
             advance_turn();
-            std::cout<<board[{5,0}]<<std::endl;
-            std::cout<<board[{6,0}]<<std::endl;
+
         }
-
-
-
-
-
-
-
-
-
 
 
 }

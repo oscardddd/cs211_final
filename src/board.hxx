@@ -9,6 +9,8 @@
 
 class Board
 {
+private:
+    // std::vector<int> matrix;
 
 
 

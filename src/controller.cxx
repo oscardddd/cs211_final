@@ -21,7 +21,7 @@ void Controller::on_mouse_up(
     ge211::geometry::Posn<int> real_pos = view_.screen_to_board(pos);
     // real_pos = {real_pos.y,real_pos.x};
 
-    model_.play_move(real_pos);
+    view_.play_move(real_pos);
 
 }
 

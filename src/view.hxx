@@ -23,6 +23,7 @@ public:
     Dimensions initial_window_dimensions() const;
     std::string initial_window_title() const;
     void update_mouse(Position pos);
+    void play_move(Position pos);
 private:
     Model model_;
     ge211::Image_sprite car_red_sprite_;

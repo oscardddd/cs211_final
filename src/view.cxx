@@ -43,10 +43,14 @@ View::View(Model const& model)
     mouse_p = {0,0};
 }
 
+void View::play_move(View::Position pos)
+{
+    model_.play_move(pos);
+}
 void
 View::draw(ge211::Sprite_set& set)
 {
-    std::cout<<model_[{5,0}]<<std::endl;
+    // std::cout<<model_[{5,0}]<<std::endl;
     for (int j = 0; j < 9; j++) {
         for (int i = 0; i < 10; i++) {
             ge211::Posn<int> grid_pos = {grid_size * j,
@@ -95,6 +99,12 @@ View::draw(ge211::Sprite_set& set)
             .y){
                 set.add_sprite(indicator_red,{mouse_p.x-6,mouse_p.y-6},6);
             }
+
+            if(model_.turn_ == Player::black && j == mouse_pos.x &&i ==
+            mouse_pos.y){
+                set.add_sprite(indicator_black,{mouse_p.x-6,mouse_p.y-6},6);
+            }
+
             //if(!model_.find_moves().empty()){
             //    for(Position pos: model_.find_moves()){
             //        set.add_sprite(indicator,{grid_size*pos.y,grid_size*pos
