@@ -2,9 +2,8 @@
 
 Controller::Controller()
         :
+        model_(),
         view_(model_),
-        first_click{0,0},
-        second_click{0,0},
         mouse{0,0}
 { }
 
@@ -20,10 +19,10 @@ void Controller::on_mouse_up(
         ge211::geometry::Posn<int> pos)
 {
     ge211::geometry::Posn<int> real_pos = view_.screen_to_board(pos);
-    try{
-        model_.play_move(real_pos);
-    }
-    catch(...){}
+    // real_pos = {real_pos.y,real_pos.x};
+
+    model_.play_move(real_pos);
+
 }
 
 View::Dimensions Controller::initial_window_dimensions() const

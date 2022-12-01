@@ -9,7 +9,10 @@
 
 class Board
 {
-private:
+
+
+
+public:
     int matrix[10][9] = {
             {13, 14, 15, 16, 17, 16, 15, 14, 13},
             {0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -22,8 +25,6 @@ private:
             {0,  0,  0,  0,  0,  0,  0,  0,  0},
             {3,  4,  5,  6,  7,  6,  5,  4,  3}
     };
-
-public:
     //
     // HELPFUL TYPE ALIASES
     //
@@ -48,7 +49,7 @@ private:
     //
 
     int get_(Position where) const;
-    void set_(Position where, int piece);
+
     void bounds_check_(Position where) const;
 
 public:
@@ -78,6 +79,8 @@ public:
     ///           for dy in [-1, 0, 1]
     ///               if dx or dy }
     /// ```
+    void erase(Position pos);
+
     static std::vector<Dimensions> const& all_directions();
 
     /// Equality for boards.

@@ -46,6 +46,7 @@ View::View(Model const& model)
 void
 View::draw(ge211::Sprite_set& set)
 {
+    std::cout<<model_[{5,0}]<<std::endl;
     for (int j = 0; j < 9; j++) {
         for (int i = 0; i < 10; i++) {
             ge211::Posn<int> grid_pos = {grid_size * j,

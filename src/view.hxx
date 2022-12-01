@@ -10,7 +10,7 @@ public:
     using Position = ge211::Posn<int>;
 
 
-    explicit View(Model const& model);
+    View(Model const&);
 
     void draw(ge211::Sprite_set& set);
 

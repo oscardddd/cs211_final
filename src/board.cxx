@@ -57,8 +57,13 @@ void
 Board::set(Position pos, int piece)
 {
    matrix[pos.x][pos.y] = piece;
+
 }
 
+void Board::erase(Board::Position pos)
+{
+    matrix[pos.x][pos.y] = 0;
+}
 void
 Board::bounds_check_(Position pos) const
 {

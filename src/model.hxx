@@ -59,9 +59,9 @@ public:
 
     int operator[](Position) const;
 
-    void set_first_click(Position);
 
-    void set_second_click(Position);
+
+
 
     Position_set find_moves();
 

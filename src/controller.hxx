@@ -22,8 +22,7 @@ protected:
 private:
     Model model_;
     View view_;
-    ge211::Posn<int> first_click;
-    ge211::Posn<int> second_click;
+
     ge211::Posn<int> mouse;
 
 

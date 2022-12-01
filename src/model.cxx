@@ -6,19 +6,6 @@ Model::Model():
     board()
 {}
 
-void
-Model::set_first_click(Model::Position pos)
-{
-    if (turn_ == Player::black && board[pos] / 10 == 1) {
-        Model::first_click = Model::board[pos];
-        click_pos = pos;
-    }
-
-    if (turn_ == Player::red && board[pos] / 10 == 0) {
-        Model::first_click = Model::board[pos];
-        click_pos = pos;
-    }
-}
 
 int
 Model::operator[](Position pos) const
@@ -33,6 +20,7 @@ Model::find_moves()
     res.clear();
     // red soldier兵
     if (first_click == 1) {
+        res[{5,0}] = true;
         if (click_pos.x <= 4) {
             check_red({click_pos.x, click_pos.y + 1});
             check_red({click_pos.x, click_pos.y - 1});
@@ -231,6 +219,7 @@ Model::find_moves()
             check_red({click_pos.x - 1, click_pos.y});
         }
     }
+    std::cout<<res<<std::endl;
     return res;
 }
 
@@ -484,15 +473,17 @@ void Model::cannon_check_vertically(Player side)
     }
 }
 
-void Model::set_second_click(Model::Position pos)
-{
-    second_click = board[pos];
-    second_pos = pos;
-}
+// void Model::set_second_click(Model::Position pos)
+// {
+//     second_click = board[pos];
+//     second_pos = pos;
+// }
 
 void
 Model::play_move(Model::Position pos)
 {
+    std::cout<<pos.x<<pos.y<<std::endl;
+
     if (turn_ == Player::neither) {
         throw ge211::Client_logic_error("Model::play_move: game over");
     }
@@ -501,8 +492,8 @@ Model::play_move(Model::Position pos)
     //     // check if there was no such move
     //     throw ge211::Client_logic_error("Model::play_move: no such move");
     // }
-    if(turn_ == Player::red && first_click/10 == 0 ||
-    turn_ == Player::black && first_click/10 == 1){
+    // if((turn_ == Player::red && first_click/10 == 0) ||
+    // (turn_ == Player::black && first_click/10 == 1)){
         // if(first_click == -1){
         //     click_pos = {pos.y,pos.x};
         //     first_click = board[click_pos];
@@ -510,17 +501,22 @@ Model::play_move(Model::Position pos)
         if(!find_moves()[{pos.y,pos.x}]){
             click_pos = {pos.y,pos.x};
             first_click = board[click_pos];
+            std::cout<<"selects "<<first_click<<std::endl;
         }
         else if(find_moves()[{pos.y,pos.x}]){
+            std::cout<<"second click"<<std::endl;
             second_pos = {pos.y,pos.x};
             second_click = board[second_pos];
             set_winner();
             board.set(second_pos,first_click);
+            board.erase(click_pos);
             first_click = -1;
             advance_turn();
+            std::cout<<board[{5,0}]<<std::endl;
+            std::cout<<board[{6,0}]<<std::endl;
         }
 
-    }
+
 
 
 
