@@ -12,7 +12,7 @@ public:
 
 protected:
     void draw(ge211::Sprite_set& set) override;
-    void on_mouse_down(ge211::events::Mouse_button,ge211::geometry::Posn<int>);
+    void on_mouse_up(ge211::events::Mouse_button,ge211::geometry::Posn<int>);
     void on_mouse_move(ge211::geometry::Posn<int>);
 
     View::Dimensions initial_window_dimensions() const override;

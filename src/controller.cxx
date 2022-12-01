@@ -15,7 +15,7 @@ Controller::draw(ge211::Sprite_set& set)
     view_.draw(set);
 }
 
-void Controller::on_mouse_down(
+void Controller::on_mouse_up(
         ge211::events::Mouse_button,
         ge211::geometry::Posn<int> pos)
 {
