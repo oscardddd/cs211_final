@@ -59,6 +59,7 @@ private:
     ge211::sprites::Circle_sprite indicator_black;
     ge211::sprites::Text_sprite blackwin;
     ge211::sprites::Text_sprite redwin;
+    ge211::sprites::Rectangle_sprite winning_bg;
 
     ge211::geometry::Posn<int> mouse_p = {0,0};
 

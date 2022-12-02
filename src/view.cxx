@@ -6,6 +6,9 @@ static ge211:: Color const available_color {50, 100, 50};
 static ge211::Color const blue{0,100,255,1};
 static ge211::Color const red{255,0,0};
 static ge211::Color const black{0,0,0};
+static ge211::Color const black_t{0,0,0,4};
+
+
 
 
 View::View(Model const& model)
@@ -29,18 +32,19 @@ View::View(Model const& model)
           board_top_sprite_("Board_top_pic.jpg"),
           board_left_sprite_("Board_left_pic.jpg"),
           board_right_sprite_("Board_right_pic.jpg"),
-          board_bottom_sprite_("Board_bottom_pic.jpg"),
           board_corner1_sprite_("Corner1.jpg"),
           board_corner2_sprite_("Corner2.jpg"),
           board_corner3_sprite_("Corner3.jpg"),
           board_corner4_sprite_("Corner4.jpg"),
+          board_bottom_sprite_("Board_bottom_pic.jpg"),
           lower_river_sprite_("Lower_river_pic.jpg"),
           upper_river_sprite_("Upper_river_pic.jpg"),
           indicator(grid_size/2-10,blue),
           indicator_red(grid_size/2-10,red),
           indicator_black(grid_size/2-10,black),
           blackwin("Black wins :)",{"sans.ttf", 30}),
-          redwin("Red wins :)",{"sans.ttf", 30})
+          redwin("Red wins :)",{"sans.ttf", 30}),
+          winning_bg({400,100},black_t)
 {
     mouse_p = {0,0};
 }
@@ -114,10 +118,13 @@ View::draw(ge211::Sprite_set& set)
             }
             if(model_.is_game_over()){
                 if(model_.get_winner() == Player::red){
-                    set.add_sprite(redwin,{50,50},7);
+                    set.add_sprite(redwin,{100,100},7);
+                    set.add_sprite(winning_bg,{0,100},6);
+
                 }
                 else{
-                    set.add_sprite(blackwin,{50,50},7);
+                    set.add_sprite(blackwin,{100,100},7);
+                    set.add_sprite(winning_bg,{0,100},6);
                 }
             }
 
