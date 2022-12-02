@@ -163,29 +163,29 @@ Model::find_moves()
         if (click_pos.x - 2 >= 5) {
             if (good_position({click_pos.x - 1, click_pos.y - 1}) &&
                 board[{click_pos.x - 1, click_pos.y - 1}] == -10) {
-                check_black({click_pos.x - 2, click_pos.y - 2});
+                check_red({click_pos.x - 2, click_pos.y - 2});
             }
             if (good_position({click_pos.x - 1, click_pos.y + 1}) &&
                 board[{click_pos.x - 1, click_pos.y + 1}] == -10) {
-                check_black({click_pos.x - 2, click_pos.y + 2});
+                check_red({click_pos.x - 2, click_pos.y + 2});
             }
             if (good_position({click_pos.x + 1, click_pos.y - 1}) &&
                 board[{click_pos.x + 1, click_pos.y - 1}] == -10) {
-                check_black({click_pos.x + 2, click_pos.y - 2});
+                check_red({click_pos.x + 2, click_pos.y - 2});
             }
             if (good_position({click_pos.x + 1, click_pos.y + 1}) &&
                 board[{click_pos.x + 1, click_pos.y + 1}] == -10) {
-                check_black({click_pos.x + 2, click_pos.y + 2});
+                check_red({click_pos.x + 2, click_pos.y + 2});
             }
         }
         else{
             if (good_position({click_pos.x + 1, click_pos.y - 1}) &&
                 board[{click_pos.x + 1, click_pos.y - 1}] == -10) {
-                check_black({click_pos.x + 2, click_pos.y - 2});
+                check_red({click_pos.x + 2, click_pos.y - 2});
             }
             if (good_position({click_pos.x + 1, click_pos.y + 1}) &&
                 board[{click_pos.x + 1, click_pos.y + 1}] == -10) {
-                check_black({click_pos.x + 2, click_pos.y + 2});
+                check_red({click_pos.x + 2, click_pos.y + 2});
             }
         }
     }
@@ -315,7 +315,7 @@ Model::horizontal_check(Player side, Position pos)
                 break;
             }
         }
-        for (int i = 1; pos.y - i >= 0; i--) {
+        for (int i = 1; pos.y - i >= 0; i++) {
             if (check_black({pos.x, pos.y - i})) {
                 break;
             }
@@ -334,7 +334,7 @@ Model::horizontal_check(Player side, Position pos)
                 break;
             }
         }
-        for (int i = 1; pos.y - i >= 0; i--) {
+        for (int i = 1; pos.y - i >= 0; i++) {
             if (check_red({pos.x, pos.y - i})) {
                 break;
             }
