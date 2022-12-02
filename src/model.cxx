@@ -344,7 +344,6 @@ Model::horizontal_check(Player side, Position pos)
             }
         }
     }
-    // std::cout<<"aha";
 }
 
 
@@ -518,33 +517,9 @@ void Model::cannon_check_vertically(Player side)
     }
 }
 
-// void Model::set_second_click(Model::Position pos)
-// {
-//     second_click = board[pos];
-//     second_pos = pos;
-// }
-
 void
 Model::play_move(Model::Position pos)
 {
-    // std::cout<<"position_selects: "<<pos.x<<pos.y<<std::endl;
-    // std::cout<<"piece select: "<<board[{pos.y,pos.x}]<<std::endl;
-
-
-    // if (winner_ != Player::neither) {
-    //     throw ge211::Client_logic_error("Model::play_move: game over");
-    // }
-    // if (turn_ == Player::red && first_click/10 != 0 ||
-    //     turn_ == Player::black && first_click/10 != 1) {
-    //     // check if there was no such move
-    //     throw ge211::Client_logic_error("Model::play_move: no such move");
-    // }
-    // if((turn_ == Player::red && board[{pos.y,pos.x}]/10 != 1) ||
-    // (turn_ == Player::black && board[{pos.y,pos.x}]/10 != 0)) {
-    //     if (first_click == -1) {
-    //         click_pos = {pos.y, pos.x};
-    //         first_click = board[click_pos];
-    //     }
         if (((turn_ == Player::red && board[{pos.y,pos.x}]/10 == 0)||
         (turn_==Player::black && board[{pos.y,pos.x}]/10 == 1)))
         {
