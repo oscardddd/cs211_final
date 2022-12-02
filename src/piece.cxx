@@ -25,7 +25,18 @@ other_player(Player player)
         return Player::neither;
     }
 }
-
+std::ostream&
+operator<<(std::ostream& os, Player p)
+{
+    switch (p) {
+    case Player::red:
+        return os << "R";
+    case Player::black:
+        return os << "B";
+    default:
+        return os << "_";
+    }
+}
 //constructor
 Piece::Piece(std::string type, Piece::Position pos, Player side)
     :

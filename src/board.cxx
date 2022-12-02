@@ -11,8 +11,8 @@ Board::Board()
 bool
 Board::good_position(Position pos) const
 {
-    return 0 <= pos.x && pos.x < 10 &&
-           0 <= pos.y && pos.y < 9;
+    return (0 <= pos.x && pos.x < 10) &&
+            (0 <= pos.y && pos.y < 9);
 }
 
 //return the number representative at position pos
@@ -62,7 +62,7 @@ Board::set(Position pos, int piece)
 
 void Board::erase(Board::Position pos)
 {
-    matrix[pos.x][pos.y] = 0;
+    matrix[pos.x][pos.y] = -10;
 }
 void
 Board::bounds_check_(Position pos) const

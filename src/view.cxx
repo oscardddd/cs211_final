@@ -3,7 +3,7 @@
 static int const grid_size = 40;
 static ge211:: Color const available_color {50, 100, 50};
 
-static ge211::Color const blue{0,0,255};
+static ge211::Color const blue{0,100,255,1};
 static ge211::Color const red{255,0,0};
 static ge211::Color const black{0,0,0};
 
@@ -38,7 +38,9 @@ View::View(Model const& model)
           upper_river_sprite_("Upper_river_pic.jpg"),
           indicator(grid_size/2-10,blue),
           indicator_red(grid_size/2-10,red),
-          indicator_black(grid_size/2-10,black)
+          indicator_black(grid_size/2-10,black),
+          blackwin("Black wins :)",{"sans.ttf", 30}),
+          redwin("Red wins :)",{"sans.ttf", 30})
 {
     mouse_p = {0,0};
 }
@@ -104,6 +106,21 @@ View::draw(ge211::Sprite_set& set)
             mouse_pos.y){
                 set.add_sprite(indicator_black,{mouse_p.x-6,mouse_p.y-6},6);
             }
+            if(!model_.find_moves().empty()){
+                for(Position p:model_.find_moves()){
+                    Position screen_p = board_to_screen(p);
+                    set.add_sprite(indicator,{screen_p.y+10,screen_p.x+10},5);
+                }
+            }
+            if(model_.is_game_over()){
+                if(model_.get_winner() == Player::red){
+                    set.add_sprite(redwin,{50,50},7);
+                }
+                else{
+                    set.add_sprite(blackwin,{50,50},7);
+                }
+            }
+
 
             //if(!model_.find_moves().empty()){
             //    for(Position pos: model_.find_moves()){
@@ -119,7 +136,7 @@ View::draw(ge211::Sprite_set& set)
 View::Position
 View::board_to_screen(Model::Position pos) const
 {
-    return {9 * pos.x, 8 * pos.y};
+    return {grid_size * pos.x, grid_size* pos.y};
 }
 
 Model::Position

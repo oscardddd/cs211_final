@@ -13,6 +13,7 @@ Model::operator[](Position pos) const
     return board[pos];
 }
 
+
 // return the possible moves gained by moving at click_pos
 Position_set
 Model::find_moves()
@@ -20,12 +21,21 @@ Model::find_moves()
     res.clear();
     // red soldier兵
     if (first_click == 1) {
-        res[{5,0}] = true;
+
         if (click_pos.x <= 4) {
             check_red({click_pos.x, click_pos.y + 1});
             check_red({click_pos.x, click_pos.y - 1});
         }
-        check_red({click_pos.x - 1, click_pos.y});
+        // check_red({click_pos.x - 1, click_pos.y});
+        if(good_position({click_pos.x - 1, click_pos.y})){
+            {
+                check_red({click_pos.x - 1, click_pos.y});
+
+            }
+
+        }
+
+
     }
 
     // black soldier兵
@@ -62,19 +72,24 @@ Model::find_moves()
     // red horse马
     else if (first_click == 4) {
         // check if there is any limitation of the eight potential moves
-        if (board[{click_pos.x, click_pos.y + 1}] == 0) {
+        if (good_position({click_pos.x, click_pos.y +1 }) &&
+        board[{click_pos.x,click_pos.y + 1}] == -10) {
             check_red({click_pos.x - 1, click_pos.y + 2});
             check_red({click_pos.x + 1, click_pos.y + 2});
         }
-        if (board[{click_pos.x, click_pos.y - 1}] == 0) {
+
+        if (good_position({click_pos.x, click_pos.y - 1})
+        && board[{click_pos.x, click_pos.y - 1}] == -10) {
             check_red({click_pos.x + 1, click_pos.y - 2});
             check_red({click_pos.x - 1, click_pos.y - 2});
         }
-        if (board[{click_pos.x - 1, click_pos.y}] == 0) {
+        if (good_position({click_pos.x-1, click_pos.y})
+        && board[{click_pos.x - 1, click_pos.y}] == -10) {
             check_red({click_pos.x - 2, click_pos.y + 1});
             check_red({click_pos.x - 2, click_pos.y - 1});
         }
-        if (board[{click_pos.x + 1, click_pos.y}] == 0) {
+        if (good_position({click_pos.x+1, click_pos.y})
+        && board[{click_pos.x + 1, click_pos.y}] == -10) {
             check_red({click_pos.x + 2, click_pos.y + 1});
             check_red({click_pos.x + 2, click_pos.y - 1});
         }
@@ -84,68 +99,92 @@ Model::find_moves()
     else if (first_click == 14) {
         // check if there is any limitation of the eight potential moves
         if (good_position({click_pos.x, click_pos.y + 1}) &&
-        board[{click_pos.x, click_pos.y + 1}] == 0) {
+        board[{click_pos.x, click_pos.y + 1}] == -10) {
             check_black({click_pos.x - 1, click_pos.y + 2});
             check_black({click_pos.x + 1, click_pos.y + 2});
         }
         if (good_position({click_pos.x, click_pos.y - 1}) &&
-        board[{click_pos.x, click_pos.y - 1}] == 0) {
+        board[{click_pos.x, click_pos.y - 1}] == -10) {
             check_black({click_pos.x + 1, click_pos.y - 2});
             check_black({click_pos.x - 1, click_pos.y - 2});
         }
         if (good_position({click_pos.x - 1, click_pos.y}) &&
-        board[{click_pos.x - 1, click_pos.y}] == 0) {
+        board[{click_pos.x - 1, click_pos.y}] == -10) {
             check_black({click_pos.x - 2, click_pos.y + 1});
             check_black({click_pos.x - 2, click_pos.y - 1});
         }
         if (good_position({click_pos.x + 1, click_pos.y}) &&
-        board[{click_pos.x + 1, click_pos.y}] == 0) {
+        board[{click_pos.x + 1, click_pos.y}] == -10) {
             check_black({click_pos.x + 2, click_pos.y + 1});
             check_black({click_pos.x + 2, click_pos.y - 1});
         }
     }
 
     // black elephant象
-    else if (first_click == 14) {
+    else if (first_click == 15)
+    {
         // see if the elephant crosses the river
         if (click_pos.x + 2 <= 4) {
             if (good_position({click_pos.x - 1, click_pos.y - 1}) &&
-                board[{click_pos.x - 1, click_pos.y - 1}] == 0) {
+                board[{click_pos.x - 1, click_pos.y - 1}] == -10) {
                 check_black({click_pos.x - 2, click_pos.y - 2});
             }
             if (good_position({click_pos.x - 1, click_pos.y + 1}) &&
-                board[{click_pos.x - 1, click_pos.y + 1}] == 0) {
+                board[{click_pos.x - 1, click_pos.y + 1}] == -10) {
                 check_black({click_pos.x - 2, click_pos.y + 2});
             }
+
             if (good_position({click_pos.x + 1, click_pos.y - 1}) &&
-                board[{click_pos.x + 1, click_pos.y - 1}] == 0) {
+                board[{click_pos.x + 1, click_pos.y - 1}] == -10) {
                 check_black({click_pos.x + 2, click_pos.y - 2});
             }
             if (good_position({click_pos.x + 1, click_pos.y + 1}) &&
-                board[{click_pos.x + 1, click_pos.y + 1}] == 0) {
+                board[{click_pos.x + 1, click_pos.y + 1}] == -10) {
                 check_black({click_pos.x + 2, click_pos.y + 2});
+            }
+
+        }
+        else
+        {
+            if (good_position({click_pos.x - 1, click_pos.y - 1}) &&
+                board[{click_pos.x - 1, click_pos.y - 1}] == -10) {
+                check_black({click_pos.x - 2, click_pos.y - 2});
+            }
+            if (good_position({click_pos.x - 1, click_pos.y + 1}) &&
+                board[{click_pos.x - 1, click_pos.y + 1}] == -10) {
+                check_black({click_pos.x - 2, click_pos.y + 2});
             }
         }
     }
 
     //red elephant象
-    else if (first_click == 14) {
+    else if (first_click == 5) {
         // see if the elephant crosses the river
         if (click_pos.x - 2 >= 5) {
             if (good_position({click_pos.x - 1, click_pos.y - 1}) &&
-                board[{click_pos.x - 1, click_pos.y - 1}] == 0) {
+                board[{click_pos.x - 1, click_pos.y - 1}] == -10) {
                 check_black({click_pos.x - 2, click_pos.y - 2});
             }
             if (good_position({click_pos.x - 1, click_pos.y + 1}) &&
-                board[{click_pos.x - 1, click_pos.y + 1}] == 0) {
+                board[{click_pos.x - 1, click_pos.y + 1}] == -10) {
                 check_black({click_pos.x - 2, click_pos.y + 2});
             }
             if (good_position({click_pos.x + 1, click_pos.y - 1}) &&
-                board[{click_pos.x + 1, click_pos.y - 1}] == 0) {
+                board[{click_pos.x + 1, click_pos.y - 1}] == -10) {
                 check_black({click_pos.x + 2, click_pos.y - 2});
             }
             if (good_position({click_pos.x + 1, click_pos.y + 1}) &&
-                board[{click_pos.x + 1, click_pos.y + 1}] == 0) {
+                board[{click_pos.x + 1, click_pos.y + 1}] == -10) {
+                check_black({click_pos.x + 2, click_pos.y + 2});
+            }
+        }
+        else{
+            if (good_position({click_pos.x + 1, click_pos.y - 1}) &&
+                board[{click_pos.x + 1, click_pos.y - 1}] == -10) {
+                check_black({click_pos.x + 2, click_pos.y - 2});
+            }
+            if (good_position({click_pos.x + 1, click_pos.y + 1}) &&
+                board[{click_pos.x + 1, click_pos.y + 1}] == -10) {
                 check_black({click_pos.x + 2, click_pos.y + 2});
             }
         }
@@ -172,20 +211,20 @@ Model::find_moves()
     else if (first_click == 16) {
         // check if the general is in 宫 before check if anything is on the way
         if ((click_pos.y - 1 >= 3) && (click_pos.x - 1 >= 0)) {
-            check_red({click_pos.x - 1, click_pos.y - 1});
+            check_black({click_pos.x - 1, click_pos.y - 1});
         }
         if ((click_pos.y - 1 >= 3) && (click_pos.x + 1 <= 2)) {
-            check_red({click_pos.x + 1, click_pos.y - 1});
+            check_black({click_pos.x + 1, click_pos.y - 1});
         }
         if ((click_pos.y + 1 <= 5) && (click_pos.x - 1 >= 0)) {
-            check_red({click_pos.x - 1, click_pos.y + 1});
+            check_black({click_pos.x - 1, click_pos.y + 1});
         }
         if ((click_pos.y + 1 <= 5) && (click_pos.x + 1 <= 2)) {
-            check_red({click_pos.x + 1, click_pos.y + 1});
+            check_black({click_pos.x + 1, click_pos.y + 1});
         }
     }
 
-        // red general帅
+    // red general帅
     else if (first_click == 7) {
         // check if the general is in 宫 before check if anything is on the way
         if (click_pos.y + 1 <= 5) {
@@ -194,32 +233,32 @@ Model::find_moves()
         if (click_pos.y - 1 >= 3) {
             check_red({click_pos.x, click_pos.y - 1});
         }
-        if (click_pos.x + 1 >= 9) {
+        if (click_pos.x + 1 <= 9) {
             check_red({click_pos.x + 1, click_pos.y});
         }
         if (click_pos.x - 1 >= 7) {
             check_red({click_pos.x - 1, click_pos.y});
         }
-        return res;
+
     }
 
-        // black general帅
+    // black general将
     else if (first_click == 17) {
         // check if the general is in 宫 before check if anything is on the way
         if (click_pos.y + 1 <= 5) {
             check_black({click_pos.x, click_pos.y + 1});
         }
         if (click_pos.y - 1 >= 3) {
-            check_black({click_pos.x - 1, click_pos.y - 1});
+            check_black({click_pos.x, click_pos.y - 1});
         }
-        if (click_pos.x + 1 >= 2) {
+        if (click_pos.x + 1 <= 2) {
             check_black({click_pos.x + 1, click_pos.y});
         }
         if (click_pos.x - 1 >= 0) {
-            check_red({click_pos.x - 1, click_pos.y});
+            check_black({click_pos.x - 1, click_pos.y});
         }
     }
-    std::cout<<res<<std::endl;
+
     return res;
 }
 
@@ -262,12 +301,12 @@ Model::check_black(Position pos)
 
 }
 
-//check vertically to find out the possible moves (for car and cannon)
+//check vertically to find out the possible moves (for car)
 void
-Model::vertical_check(Player side, Position pos)
+Model::horizontal_check(Player side, Position pos)
 {
     if (side == Player::black) {
-        for (int i = 1; pos.y + i < 10; i++) {
+        for (int i = 1; pos.y + i < 9; i++) {
             if (check_black({pos.x, pos.y + i})) {
                 break;
             }
@@ -286,9 +325,8 @@ Model::vertical_check(Player side, Position pos)
             }
         }
     } else if (side == Player::red) {
-        for (int i = 1; pos.y + i < 10; i++) {
+        for (int i = 1; pos.y + i < 9; i++) {
             if (check_red({pos.x, pos.y + i})) {
-
                 break;
             }
             if (board[{pos.x, pos.y + i}] / 10 == 1) {
@@ -306,15 +344,16 @@ Model::vertical_check(Player side, Position pos)
             }
         }
     }
+    // std::cout<<"aha";
 }
 
 
 void
-Model::horizontal_check(Player side, Position pos)
+Model::vertical_check(Player side, Position pos)
 {
     if (side == Player::black) {
         //check move right
-        for (int i = 1; pos.x + i < 9; i++) {
+        for (int i = 1; pos.x + i < 10; i++) {
             if (check_black({pos.x + i, pos.y})) {
                 break;
             }
@@ -323,8 +362,8 @@ Model::horizontal_check(Player side, Position pos)
                 break;
             }
         }
-        //check move left
-        for (int i = 1; pos.x - i >= 0; i--) {
+        //check move upward
+        for (int i = 1; pos.x - i >= 0; i++) {
             if (check_black({pos.x - i, pos.y})) {
                 break;
             }
@@ -333,9 +372,10 @@ Model::horizontal_check(Player side, Position pos)
                 break;
             }
         }
-    } else if (side == Player::red) {
+    }
+    else if (side == Player::red) {
         //check move right
-        for (int i = 1; pos.x + i < 9; i++) {
+        for (int i = 1; pos.x + i < 10; i++) {
             if (check_red({pos.x + i, pos.y})) {
                 break;
             }
@@ -345,7 +385,7 @@ Model::horizontal_check(Player side, Position pos)
             }
         }
         //check move left
-        for (int i = 1; pos.x - i >= 0; i--) {
+        for (int i = 1; pos.x - i >= 0; i++) {
             if (check_red({pos.x - i, pos.y})) {
                 break;
             }
@@ -361,7 +401,7 @@ Model::horizontal_check(Player side, Position pos)
 
 void Model::cannon_check_horizontally(Player side)
 {
-    int same_side = 18;
+    int same_side = 20;
 
     if (side == Player::red){
         same_side = 0;
@@ -370,11 +410,11 @@ void Model::cannon_check_horizontally(Player side)
         same_side = 1;}
 
     int mark = 20;
-    int mark_two = -1;
+    int mark_two = -20;
 
     //check rightward
     for (int i = 1; click_pos.y + i < 9; i++) {
-        if (board[{click_pos.x, click_pos.y + i}] == 0) {
+        if (board[{click_pos.x, click_pos.y + i}] == -10) {
             res[{click_pos.x,click_pos.y + i}] = true;
         }
         else {
@@ -382,7 +422,7 @@ void Model::cannon_check_horizontally(Player side)
             break;
         }
     }
-    for (int m = mark; m < 9; m++){
+    for (int m = mark + 1; m < 9; m++){
         if (board[{click_pos.x, m}]/ 10 == same_side){
             break;
         }
@@ -396,7 +436,7 @@ void Model::cannon_check_horizontally(Player side)
     //check leftward
     for (int i = 1; click_pos.y - i >= 0; i++) {
 
-        if (board[{click_pos.x,click_pos.y -i}]==0) {
+        if (board[{click_pos.x,click_pos.y -i}] == -10) {
             res[{click_pos.x,click_pos.y-i}] = true;
         }
         else{
@@ -404,7 +444,7 @@ void Model::cannon_check_horizontally(Player side)
             break;
         }
     }
-    for(int m = mark_two;m >= 0; m--){
+    for(int m = mark_two -1;m >= 0; m--){
         if(board[{click_pos.x, m}] / 10 == same_side){
             break;
         }
@@ -419,7 +459,7 @@ void Model::cannon_check_horizontally(Player side)
 
 void Model::cannon_check_vertically(Player side)
 {
-    int same_side = 18;
+    int same_side = 20;
 
     if (side == Player::red){
         same_side = 0;
@@ -428,11 +468,11 @@ void Model::cannon_check_vertically(Player side)
         same_side = 1;}
 
     int mark = 20;
-    int mark_two = -1;
+
 
     //check downward
     for (int j = 1; click_pos.x + j < 10; j++) {
-        if (board[{click_pos.x + j, click_pos.y}] == 0) {
+        if (board[{click_pos.x + j, click_pos.y}] == -10) {
             res[{click_pos.x + j, click_pos.y}] = true;
         }
         else {
@@ -440,7 +480,8 @@ void Model::cannon_check_vertically(Player side)
             break;
         }
     }
-    for (int m = mark; m < 10; m++){
+    //downward checks
+    for (int m = mark+1; m < 10; m++){
         if (board[{m, click_pos.y}]/ 10 == same_side){
             break;
         }
@@ -450,10 +491,14 @@ void Model::cannon_check_vertically(Player side)
         }
     }
 
+
+    //上面的炮架
+    int mark_two = -20;
+
     //check upward
     for (int j = 1; click_pos.x - j >= 0; j++) {
 
-        if (board[{click_pos.x - j, click_pos.y}]== 0) {
+        if (board[{click_pos.x - j, click_pos.y}]== -10) {
             res[{click_pos.x - j,click_pos.y}] = true;
         }
         else{
@@ -462,7 +507,7 @@ void Model::cannon_check_vertically(Player side)
         }
     }
 
-    for(int m = mark_two; m >= 0; m--){
+    for(int m = mark_two -1; m >= 0; m--){
         if(board[{m, click_pos.y}] / 10 == same_side){
             break;
         }
@@ -482,40 +527,43 @@ void Model::cannon_check_vertically(Player side)
 void
 Model::play_move(Model::Position pos)
 {
-    std::cout<<pos.x<<pos.y<<std::endl;
+    // std::cout<<"position_selects: "<<pos.x<<pos.y<<std::endl;
+    // std::cout<<"piece select: "<<board[{pos.y,pos.x}]<<std::endl;
 
-    if (turn_ == Player::neither) {
-        throw ge211::Client_logic_error("Model::play_move: game over");
-    }
+
+    // if (winner_ != Player::neither) {
+    //     throw ge211::Client_logic_error("Model::play_move: game over");
+    // }
     // if (turn_ == Player::red && first_click/10 != 0 ||
     //     turn_ == Player::black && first_click/10 != 1) {
     //     // check if there was no such move
     //     throw ge211::Client_logic_error("Model::play_move: no such move");
     // }
-    // if((turn_ == Player::red && first_click/10 == 0) ||
-    // (turn_ == Player::black && first_click/10 == 1)){
-        // if(first_click == -1){
-        //     click_pos = {pos.y,pos.x};
-        //     first_click = board[click_pos];
-        // }
-        if(!find_moves()[{pos.y,pos.x}]){
-            click_pos = {pos.y,pos.x};
+    // if((turn_ == Player::red && board[{pos.y,pos.x}]/10 != 1) ||
+    // (turn_ == Player::black && board[{pos.y,pos.x}]/10 != 0)) {
+    //     if (first_click == -1) {
+    //         click_pos = {pos.y, pos.x};
+    //         first_click = board[click_pos];
+    //     }
+        if (((turn_ == Player::red && board[{pos.y,pos.x}]/10 == 0)||
+        (turn_==Player::black && board[{pos.y,pos.x}]/10 == 1)))
+        {
+            click_pos = {pos.y, pos.x};
             first_click = board[click_pos];
-            std::cout<<"selects "<<first_click<<std::endl;
-        }
-        else if(find_moves()[{pos.y,pos.x}]){
-            std::cout<<"second click: "<<std::endl;
-            second_pos = {pos.y,pos.x};
+            find_moves();
+        } else if (find_moves()[{pos.y, pos.x}]) {
+            // std::cout << "second click: " << std::endl;
+            second_pos = {pos.y, pos.x};
             second_click = board[second_pos];
-            set_winner();
-            board.set(second_pos,first_click);
+
+            board.set(second_pos, first_click);
             board.erase(click_pos);
             first_click = -1;
-            advance_turn();
+            if(!set_winner()){
+                advance_turn();
+            }
 
         }
-
-
 }
 
 
@@ -541,4 +589,20 @@ void Model::advance_turn()
 }
 
 
+
+bool Model::is_game_over()
+{
+    if(winner_!=Player::neither){
+        return true;
+    }
+    return false;
+}
+Player Model::get_winner(){
+    return winner_;
+}
+
+void Model::set_pos(Model::Position pos,int piece)
+{
+    board.set(pos,piece);
+}
 

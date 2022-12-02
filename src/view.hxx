@@ -24,6 +24,8 @@ public:
     std::string initial_window_title() const;
     void update_mouse(Position pos);
     void play_move(Position pos);
+
+
 private:
     Model model_;
     ge211::Image_sprite car_red_sprite_;
@@ -55,6 +57,8 @@ private:
     ge211::sprites::Circle_sprite indicator;
     ge211::sprites::Circle_sprite indicator_red;
     ge211::sprites::Circle_sprite indicator_black;
+    ge211::sprites::Text_sprite blackwin;
+    ge211::sprites::Text_sprite redwin;
 
     ge211::geometry::Posn<int> mouse_p = {0,0};
 

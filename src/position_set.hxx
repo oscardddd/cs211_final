@@ -20,7 +20,7 @@ class Position_set
 public:
     /// All position coordinates must be between 0 (inclusive) and
     /// `coord_limit` (exclusive).
-    static constexpr int coord_limit = 8;
+    static constexpr int coord_limit = 10;
 
     /// The element type of the set.
     using value_type = ge211::Posn<int>;

@@ -13,15 +13,17 @@ class Model
 public:
     using Position = ge211::Posn<int>;
 
+protected:
+    int first_click;
+    Position click_pos = {0, 0};
+
+
 private:
     Player winner_ = Player::neither;
     // the piece user selects
-    int first_click;
+
     //the position the user selects
-    Position click_pos = {0, 0};
     // 0 indicates we are currently clicks
-
-
 
     int second_click;
     Position second_pos = {0, 0};
@@ -55,19 +57,17 @@ private:
 
 public:
     Model();
+    void set_pos(Position, int);
     Player turn_ = Player::red;
 
     int operator[](Position) const;
 
-
-
-
-
     Position_set find_moves();
 
-    bool check_click();
-
     void play_move(Position);
+
+    bool is_game_over();
+    Player get_winner();
 
 
 
